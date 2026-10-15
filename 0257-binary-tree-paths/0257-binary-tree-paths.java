@@ -1,30 +1,36 @@
+
+import java.util.*;
+
 class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         List<String> result = new ArrayList<>();
-        dfs(root, "", result);
+
+        findPaths(root, "", result);
+
         return result;
     }
 
-    private void dfs(TreeNode node, String path, List<String> result) {
-        if (node == null) {
+    private void findPaths(TreeNode root, String path,
+                           List<String> result) {
+        if (root == null) {
             return;
         }
 
-        // Add current node to the path
+        // Add the current node to the path
         if (path.isEmpty()) {
-            path = String.valueOf(node.val);
+            path = String.valueOf(root.val);
         } else {
-            path += "->" + node.val;
+            path += "->" + root.val;
         }
 
-        // If it's a leaf, store the complete path
-        if (node.left == null && node.right == null) {
+        // If the node is a leaf, save the path
+        if (root.left == null && root.right == null) {
             result.add(path);
             return;
         }
 
-        // Traverse left and right subtrees
-        dfs(node.left, path, result);
-        dfs(node.right, path, result);
+        // Explore left and right subtrees
+        findPaths(root.left, path, result);
+        findPaths(root.right, path, result);
     }
 }
